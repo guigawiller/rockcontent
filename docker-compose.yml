@@ -3,6 +3,12 @@ services:
     web:
       image: php
       volumes:
-        - ./:/var/www/html
+        - .:/var/www/html
       ports:
         - "8000:80"
+      command: php -S 0.0.0.0:8000 -t ./var/www/html/app
+      healthcheck:
+        test: ["CMD", "curl", "-f", "http://localhost:80"]
+        interval: 5s
+        timeout: 1s
+        retries: 1
